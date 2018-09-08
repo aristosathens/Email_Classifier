@@ -15,7 +15,7 @@ import (
 
 func main() {
 
-	// Dummy account: Aristos.Website, VerySecurePassword
+	// Use dummy account: Aristos.Website, VerySecurePassword
 	c := User{}
 	userName := getUserInput("Enter email: ")
 	password := getUserInput("Enter password: ")
@@ -28,7 +28,7 @@ func main() {
 	fmt.Println("Unread emails: ")
 	for i, email := range c.Emails {
 		channels[i] = classifier.Classify(email, c.Categories)
-		fmt.Println(email.Envelope.Subject)
+		fmt.Println("Subject: " + email.Envelope.Subject)
 	}
 
 	// Merge all channels so we only have to listen on a single channel
@@ -38,7 +38,9 @@ func main() {
 	for {
 		select {
 		case classifiedEmail, ok := <-ch:
+			//
 			// send to front end...
+			//
 			fmt.Println(classifiedEmail)
 			if !ok {
 				break
@@ -66,6 +68,7 @@ func getUserInput(message string) string {
 
 // Returns a channel that listens to all channels in the input array
 func mergeChannels(channels []<-chan Classification) <-chan Classification {
+
 	aggregateChannel := make(chan Classification, len(channels))
 	for _, ch := range channels {
 		go func(c <-chan Classification) {

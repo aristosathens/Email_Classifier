@@ -21,6 +21,7 @@ const (
 	OTHER  Urgency = 2
 )
 
+// Classifier returns struct of Urgency level and Category for the contenets of Email
 type Classification struct {
 	Email  *imap.Message
 	Urgent Urgency
@@ -29,12 +30,14 @@ type Classification struct {
 
 // ------------------------------------------- User ------------------------------------------- //
 
+// Holds client info.
 type User struct {
-	client     *client.Client
 	Emails     []*imap.Message
-	inbox      *imap.MailboxStatus
-	mailboxes  chan *imap.MailboxInfo
 	Categories []Category
+
+	client    *client.Client
+	inbox     *imap.MailboxStatus
+	mailboxes chan *imap.MailboxInfo
 }
 
 // Sets up client object
