@@ -7,7 +7,7 @@ import (
 
 // ------------------------------------------- Public ------------------------------------------- //
 
-// Given email, and list of
+// Given email and possible categories, returns urgency level and category of email's contents
 func Classify(email *imap.Message, categories []Category) <-chan Classification {
 	returnChan := make(chan Classification)
 
